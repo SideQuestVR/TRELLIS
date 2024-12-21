@@ -8,11 +8,11 @@ if [ ! -f /app/.post_install_done ]; then
     echo "Running post-install steps..."
     
     # Install GPU-dependent packages
-    ./setup.sh --mipgaussian --diffoctreerast
+    conda run -n base ./setup.sh --mipgaussian --diffoctreerast
     
     # Verify installation
     export CXX=/usr/local/bin/gxx-wrapper
-    python3.11 example.py
+    python example.py
     
     # Mark completion
     touch /app/.post_install_done
@@ -23,4 +23,4 @@ fi
 export CXX=/usr/local/bin/gxx-wrapper
 
 echo "Launching RunPod handler..."
-python3.11 -u rp_handler.py 
+python -u rp_handler.py 

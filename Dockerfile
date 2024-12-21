@@ -9,14 +9,6 @@ WORKDIR /app
 # Add the application files
 COPY . /app/
 
-# Initialize and update git submodules
-RUN cd /app && \
-    git init && \
-    git submodule init && \
-    git submodule update --init --recursive && \
-    git submodule update --recursive && \
-    rm -rf .git */.git **/.git  # Remove all .git directories
-
 # Setup conda and PyTorch
 RUN conda config --set always_yes true && conda init
 RUN conda install cuda=12.4 pytorch==2.4.0 torchvision==0.19.0 pytorch-cuda=12.4 -c pytorch -c nvidia
