@@ -14,14 +14,6 @@ RUN apt-get update && apt-get install -y \
 # Copy the application files
 COPY . /app/
 
-# Initialize and update git submodules
-RUN cd /app && \
-    git init && \
-    git submodule init && \
-    git submodule update --init --recursive && \
-    git submodule update --recursive && \
-    rm -rf .git */.git **/.git
-
 # Create g++ wrapper for JIT compilation
 RUN printf '#!/usr/bin/env bash\nexec /usr/bin/g++ -I/usr/local/cuda/include -I/usr/local/cuda/include/crt "$@"\n' > /usr/local/bin/gxx-wrapper && \
     chmod +x /usr/local/bin/gxx-wrapper
