@@ -20,15 +20,19 @@ trellis_pipe = init_pipeline()
 def handler(event):
     try:
         input_data = event["input"]
-        image_path = input_data.get("image_path")
+        image_base64 = input_data.get("image_base64")
         mesh_simplify = input_data.get("mesh_simplify", 0.95)
         texture_size = input_data.get("texture_size", 1024)
         
-        if not image_path or not os.path.exists(image_path):
-            return {"error": "Image path not provided or file not found"}
+        if not image_base64:
+            return {"error": "Image base64 data not provided"}
         
-        # Load and process image
-        image = Image.open(image_path)
+        try:
+            # Decode base64 to image
+            image_data = base64.b64decode(image_base64)
+            image = Image.open(io.BytesIO(image_data))
+        except Exception as e:
+            return {"error": f"Failed to decode base64 image: {str(e)}"}
         
         # Generate 3D model
         outputs = trellis_pipe.run(
