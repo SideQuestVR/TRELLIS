@@ -83,7 +83,7 @@ RUN conda run -n base pip install fastapi uvicorn python-multipart
 COPY startup.runpod.sh /app/startup.runpod.sh
 RUN chmod +x /app/startup.runpod.sh
 
-COPY .gitignore CODE_OF_CONDUCT.md LICENSE README.md setup.sh startup.runpod.sh headless_app.py model_generator.py example.py ./
+COPY .gitignore CODE_OF_CONDUCT.md LICENSE README.md setup.sh startup.runpod.sh rp_handler.py model_generator.py example.py ./
 RUN chmod +x /app/*.sh
 
 ENV PATH=/opt/conda/bin:$PATH
