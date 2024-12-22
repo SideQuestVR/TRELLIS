@@ -48,7 +48,7 @@ class ModelGenerator:
         
         # Save GLB to bytes buffer and convert to base64
         buffer = io.BytesIO()
-        glb.export(buffer, format="glb")
+        glb.export(buffer, file_type="glb")
         glb_base64 = base64.b64encode(buffer.getvalue()).decode()
         
         return {
