@@ -6,8 +6,8 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Add the application files
-COPY . /app/
+# First, copy only the files needed for dependency installation
+COPY setup.sh ./
 
 # Setup conda and PyTorch
 RUN conda config --set always_yes true && conda init
@@ -52,6 +52,11 @@ RUN conda clean --all -f -y
 # This reduces the size of the image by a few hundred megs. Not great, but it's a start.
 RUN rdfind -makesymlinks true /opt/conda
 
+# Only after all dependencies are installed, copy the application code
+COPY ./trellis ./trellis
+COPY ./assets ./assets
+COPY ./extensions ./extensions
+
 # Final stage
 FROM pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel AS final
 
@@ -77,6 +82,9 @@ RUN conda run -n base pip install fastapi uvicorn python-multipart
 # Add the new startup script
 COPY startup.runpod.sh /app/startup.runpod.sh
 RUN chmod +x /app/startup.runpod.sh
+
+COPY .gitignore CODE_OF_CONDUCT.md LICENSE README.md setup.sh startup.runpod.sh headless_app.py model_generator.py example.py ./
+RUN chmod +x /app/*.sh
 
 ENV PATH=/opt/conda/bin:$PATH
 
