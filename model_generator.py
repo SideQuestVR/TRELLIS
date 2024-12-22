@@ -16,6 +16,8 @@ class ModelGenerator:
                 ss_guidance_strength=7.5, ss_sampling_steps=12,
                 slat_guidance_strength=3.0, slat_sampling_steps=12,
                 mesh_simplify=0.95, texture_size=1024):
+
+        print(f"Generating 3D model with seed: {seed}")
         
         # Update seed if randomization is requested
         if randomize_seed:
@@ -46,7 +48,7 @@ class ModelGenerator:
         
         # Save GLB to bytes buffer and convert to base64
         buffer = io.BytesIO()
-        glb.export(buffer)
+        glb.export(buffer, format="glb")
         glb_base64 = base64.b64encode(buffer.getvalue()).decode()
         
         return {

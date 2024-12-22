@@ -1,5 +1,5 @@
 import base64
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 from model_generator import ModelGenerator

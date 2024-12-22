@@ -50,7 +50,9 @@ RUN conda clean --all -f -y
 RUN rdfind -makesymlinks true /opt/conda
 
 # Only after all dependencies are installed, copy the application code
-COPY . .
+COPY ./trellis ./trellis
+COPY ./assets ./assets
+COPY ./extensions ./extensions
 
 # Final stage
 FROM pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel AS final
@@ -77,6 +79,8 @@ RUN conda run -n base pip install fastapi uvicorn python-multipart
 # Add the new startup script
 COPY startup.sh /app/startup.sh
 RUN chmod +x /app/startup.sh
+
+COPY .gitignore CODE_OF_CONDUCT.md LICENSE README.md setup.sh startup.sh headless_app.py model_generator.py example.py ./
 
 ENV PATH=/opt/conda/bin:$PATH
 
