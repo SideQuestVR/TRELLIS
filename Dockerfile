@@ -81,6 +81,7 @@ COPY startup.sh /app/startup.sh
 RUN chmod +x /app/startup.sh
 
 COPY .gitignore CODE_OF_CONDUCT.md LICENSE README.md setup.sh startup.sh headless_app.py model_generator.py example.py ./
+RUN chmod +x /app/*.sh
 
 ENV PATH=/opt/conda/bin:$PATH
 
