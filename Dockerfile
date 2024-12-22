@@ -6,25 +6,22 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Add the application files
-COPY . /app/
+# First, copy only the files needed for dependency installation
+COPY setup.sh ./
 
-# Setup conda and PyTorch
+# Setup conda and install dependencies
 RUN conda config --set always_yes true && conda init
 RUN conda install cuda=12.4 pytorch==2.4.0 torchvision==0.19.0 pytorch-cuda=12.4 -c pytorch -c nvidia
 
-# Install Kaolin dependencies first
+# Install Kaolin and other dependencies
 RUN conda run -n base pip install -r https://raw.githubusercontent.com/NVIDIAGameWorks/kaolin/v0.17.0/tools/build_requirements.txt \
     -r https://raw.githubusercontent.com/NVIDIAGameWorks/kaolin/v0.17.0/tools/viz_requirements.txt \
     -r https://raw.githubusercontent.com/NVIDIAGameWorks/kaolin/v0.17.0/tools/requirements.txt
 
-# Now install Kaolin with the correct version
 RUN conda run -n base pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.4.0_cu124.html
 
-# Install diso and other dependencies
 RUN conda run -n base pip install diso
 
-# Verify Kaolin installation
 RUN conda run -n base python -c "import kaolin; print(kaolin.__version__)"
 
 # Create a g++ wrapper for JIT, since the include dirs are passed with -i rather than -I for some reason
@@ -51,6 +48,9 @@ RUN conda clean --all -f -y
 # Deduplicate with rdfind
 # This reduces the size of the image by a few hundred megs. Not great, but it's a start.
 RUN rdfind -makesymlinks true /opt/conda
+
+# Only after all dependencies are installed, copy the application code
+COPY . .
 
 # Final stage
 FROM pytorch/pytorch:2.4.0-cuda12.4-cudnn9-devel AS final

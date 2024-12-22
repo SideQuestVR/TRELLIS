@@ -2,7 +2,7 @@ import base64
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
-from .model_generator import ModelGenerator
+from model_generator import ModelGenerator
 import io
 from pydantic import BaseModel
 
