@@ -79,6 +79,9 @@ RUN apt-get update && \
 # Add FastAPI dependencies
 RUN conda run -n base pip install fastapi uvicorn python-multipart
 
+# Add RunPod dependencies
+RUN conda run -n base pip install runpod
+
 # Add the new startup script
 COPY startup.runpod.sh /app/startup.runpod.sh
 RUN chmod +x /app/startup.runpod.sh
