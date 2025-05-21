@@ -79,14 +79,14 @@ We provide the following pretrained models:
 
 | Model | Description | #Params | Download |
 | --- | --- | --- | --- |
-| TRELLIS-image-large | Large image-to-3D model | 1.2B | [Download](https://huggingface.co/JeffreyXiang/TRELLIS-image-large) |
+| TRELLIS-image-large | Large image-to-3D model | 1.2B | [Download](https://huggingface.co/shakamone/trellis-large) |
 | TRELLIS-text-base | Base text-to-3D model | 342M | Coming Soon |
 | TRELLIS-text-large | Large text-to-3D model | 1.1B | Coming Soon |
 | TRELLIS-text-xlarge | Extra-large text-to-3D model | 2.0B | Coming Soon |
 
 The models are hosted on Hugging Face. You can directly load the models with their repository names in the code:
 ```python
-TrellisImageTo3DPipeline.from_pretrained("JeffreyXiang/TRELLIS-image-large")
+TrellisImageTo3DPipeline.from_pretrained("shakamone/trellis-large")
 ```
 
 If you prefer loading the model from local, you can download the model files from the links above and load the model with the folder path (folder structure should be maintained):
@@ -114,7 +114,7 @@ from trellis.pipelines import TrellisImageTo3DPipeline
 from trellis.utils import render_utils, postprocessing_utils
 
 # Load a pipeline from a model folder or a Hugging Face model hub.
-pipeline = TrellisImageTo3DPipeline.from_pretrained("JeffreyXiang/TRELLIS-image-large")
+pipeline = TrellisImageTo3DPipeline.from_pretrained("shakamone/trellis-large")
 pipeline.cuda()
 
 # Load an image

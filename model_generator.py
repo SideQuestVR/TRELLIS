@@ -8,7 +8,7 @@ import base64
 
 class ModelGenerator:
     def __init__(self):
-        self.pipeline = TrellisImageTo3DPipeline.from_pretrained("JeffreyXiang/TRELLIS-image-large")
+        self.pipeline = TrellisImageTo3DPipeline.from_pretrained("shakamone/trellis-large")
         self.pipeline.cuda()
         self.MAX_SEED = np.iinfo(np.int32).max
 
