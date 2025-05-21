@@ -48,7 +48,7 @@ async def startup_event():
     cleanup_old_files(TMP_DIR)
 
 # Initialize pipeline globally
-pipeline = TrellisImageTo3DPipeline.from_pretrained("JeffreyXiang/TRELLIS-image-large")
+pipeline = TrellisImageTo3DPipeline.from_pretrained("shakamone/trellis-large")
 pipeline.cuda()
 
 def preprocess_image(image: Image.Image) -> Tuple[str, Image.Image]:

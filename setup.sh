@@ -1,6 +1,8 @@
 # Read Arguments
 TEMP=`getopt -o h --long help,new-env,basic,xformers,flash-attn,diffoctreerast,vox2seq,spconv,mipgaussian,kaolin,nvdiffrast,demo -n 'setup.sh' -- "$@"`
+
 eval set -- "$TEMP"
+
 HELP=false
 NEW_ENV=false
 BASIC=false
@@ -15,9 +17,11 @@ MIPGAUSSIAN=false
 KAOLIN=false
 NVDIFFRAST=false
 DEMO=false
+
 if [ "$#" -eq 1 ] ; then
     HELP=true
 fi
+
 while true ; do
     case "$1" in
         -h|--help) HELP=true ; shift ;;

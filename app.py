@@ -243,6 +243,6 @@ with gr.Blocks() as demo:
 
 # Launch the Gradio app
 if __name__ == "__main__":
-    pipeline = TrellisImageTo3DPipeline.from_pretrained("JeffreyXiang/TRELLIS-image-large")
+    pipeline = TrellisImageTo3DPipeline.from_pretrained("shakamone/trellis-large")
     pipeline.cuda()
     demo.launch()
