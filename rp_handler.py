@@ -10,7 +10,7 @@ import io
 
 # Initialize pipeline
 def init_pipeline():
-    pipeline = TrellisImageTo3DPipeline.from_pretrained("microsoft/TRELLIS-image-large")
+    pipeline = TrellisImageTo3DPipeline.from_pretrained("shakamone/trellis-large")
     pipeline.cuda()
     return pipeline
 
