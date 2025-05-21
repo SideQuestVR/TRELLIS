@@ -65,24 +65,24 @@ if [ "$HELP" = true ] ; then
 fi
 
 if [ "$NEW_ENV" = true ] ; then
-    conda create -n trellis python=3.10
+    conda create -n trellis python=3.11
     conda activate trellis
     conda install pytorch==2.4.0 torchvision==0.19.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 fi
 
 # Get system information
 WORKDIR=$(pwd)
-PYTORCH_VERSION=$(python -c "import torch; print(torch.__version__)")
-PLATFORM=$(python -c "import torch; print(('cuda' if torch.version.cuda else ('hip' if torch.version.hip else 'unknown')) if torch.cuda.is_available() else 'cpu')")
+PYTORCH_VERSION=$(python3.11 -c "import torch; print(torch.__version__)")
+PLATFORM=$(python3.11 -c "import torch; print(('cuda' if torch.version.cuda else ('hip' if torch.version.hip else 'unknown')) if torch.cuda.is_available() else 'cpu')")
 case $PLATFORM in
     cuda)
-        CUDA_VERSION=$(python -c "import torch; print(torch.version.cuda)")
+        CUDA_VERSION=$(python3.11 -c "import torch; print(torch.version.cuda)")
         CUDA_MAJOR_VERSION=$(echo $CUDA_VERSION | cut -d'.' -f1)
         CUDA_MINOR_VERSION=$(echo $CUDA_VERSION | cut -d'.' -f2)
         echo "[SYSTEM] PyTorch Version: $PYTORCH_VERSION, CUDA Version: $CUDA_VERSION"
         ;;
     hip)
-        HIP_VERSION=$(python -c "import torch; print(torch.version.hip)")
+        HIP_VERSION=$(python3.11 -c "import torch; print(torch.version.hip)")
         HIP_MAJOR_VERSION=$(echo $HIP_VERSION | cut -d'.' -f1)
         HIP_MINOR_VERSION=$(echo $HIP_VERSION | cut -d'.' -f2)
         # Install pytorch 2.4.1 for hip
@@ -95,7 +95,7 @@ case $PLATFORM in
             sudo chmod -R 777 .
             pip install .
             cd $WORKDIR
-            PYTORCH_VERSION=$(python -c "import torch; print(torch.__version__)")
+            PYTORCH_VERSION=$(python3.11 -c "import torch; print(torch.__version__)")
         fi
         echo "[SYSTEM] PyTorch Version: $PYTORCH_VERSION, HIP Version: $HIP_VERSION"
         ;;
@@ -167,7 +167,7 @@ if [ "$FLASHATTN" = true ] ; then
         git clone --recursive https://github.com/ROCm/flash-attention.git /tmp/extensions/flash-attention
         cd /tmp/extensions/flash-attention
         git checkout tags/v2.6.3-cktile
-        GPU_ARCHS=gfx942 python setup.py install #MI300 series
+        GPU_ARCHS=gfx942 python3.11 setup.py install #MI300 series
         cd $WORKDIR
     else
         echo "[FLASHATTN] Unsupported platform: $PLATFORM"
