@@ -25,7 +25,8 @@ ENV CXX=/usr/local/bin/gxx-wrapper
 
 # Install Python dependencies
 RUN python3.11 -m pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu118
-RUN python3.11 -m pip install --ignore-installed --no-cache-dir kaolin==0.16.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.0.0_cu118.html
+RUN python3.11 -m pip install --ignore-installed --no-cache-dir kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.4.1_cu118.html
+
 RUN puthon3.11 -n pip install https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.0.8/flash_attn-2.4.3+cu118torch2.7-cp311-cp311-linux_x86_64.whl
 RUN python3.11 -m pip install --no-cache-dir diso plyfile utils3d xformers # flash_attn
 RUN python3.11 -m pip install --no-cache-dir git+https://github.com/NVlabs/nvdiffrast.git
